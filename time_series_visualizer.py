@@ -32,21 +32,25 @@ def draw_bar_plot():
     # Copy and modify data for monthly bar plot
     df_bar = df.copy()
 
+    df_bar.index = pd.to_datetime(df_bar.index)
 
-    # Draw bar plot
-    # Sort the DataFrame by date
-    df_bar = df_bar.sort_index()
+    # Group by year and month, and then calculate the mean
+    monthly_average = df_bar.groupby([df_bar.index.year, df_bar.index.month]).mean()
+
+    monthly_average.index = pd.to_datetime(monthly_average.index.map(lambda x: f'{x[0]}-{x[1]}'))
+
+    print("monthly_average:")
+    print(monthly_average)
 
     # Create figure and axis objects
     fig, ax = plt.subplots(figsize=(10, 6))
 
     # Plot the bar chart
-    ax.bar(df_bar.index, df_bar['value'], color='skyblue')
+    ax.bar(monthly_average.index, monthly_average['value'], color='skyblue')
 
     # Set labels and title
     ax.set_xlabel('Date')
     ax.set_ylabel('Value')
-    ax.set_title('Bar Plot')
 
     # Rotate x-axis labels for better readability (optional)
     plt.xticks(rotation=45)
@@ -55,7 +59,7 @@ def draw_bar_plot():
     plt.tight_layout()
 
 
-    # Save image and return fig (don't change this part)
+    # # Save image and return fig (don't change this part)
     fig.savefig('bar_plot.png')
     return fig
 
