@@ -99,7 +99,8 @@ def draw_bar_plot():
     plt.ylabel('Average Page Views', fontweight ='bold', fontsize = 15) 
     plt.xticks([r + barWidth*6 for r in range(len(unique_years))], unique_years)
     
-    plt.legend()
+    legend = plt.legend()
+    legend.set_title('Months')
 
     fig = plt.gcf()
 
