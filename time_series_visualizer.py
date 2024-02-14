@@ -50,39 +50,56 @@ def draw_bar_plot():
     # Pivot the dataframe
     pivot_df = monthly_average.pivot(index='Month', columns='Year', values='value')
     pivot_df.fillna(0, inplace=True)
-    print("pivot_df")
-    print(pivot_df)
-
 
     # set width of bar 
-    barWidth = 0.25
-    plt.subplots(figsize =(12, 8)) 
-    
-    # set height of bar 
-    IT = [12, 30, 1, 8, 22] 
-    ECE = [28, 6, 16, 5, 10] 
-    CSE = [29, 3, 24, 25, 17] 
-    
-    # Set position of bar on X axis 
-    br1 = np.arange(len(IT)) 
-    br2 = [x + barWidth for x in br1] 
-    br3 = [x + barWidth for x in br2] 
-    
-    # Make the plot
-    plt.bar(br1, IT, color ='r', width = barWidth, 
-            edgecolor ='grey', label ='IT') 
-    plt.bar(br2, ECE, color ='g', width = barWidth, 
-            edgecolor ='grey', label ='ECE') 
-    plt.bar(br3, CSE, color ='b', width = barWidth, 
-            edgecolor ='grey', label ='CSE') 
+    barWidth = 0.06
+    plt.subplots(figsize =(12, 8))
+
+    # Set position of bars on X axis
+    num_of_rows = len(pivot_df)
+    offset = 0
+    labels = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ]
+    hex_colors = [
+        "#3366CC",  # January
+        "#FF3366",  # February
+        "#33CC33",  # March
+        "#FF9900",  # April
+        "#9933CC",  # May
+        "#FFCC00",  # June
+        "#6699FF",  # July
+        "#FF6600",  # August
+        "#0099CC",  # September
+        "#FF3333",  # October
+        "#99CC33",  # November
+        "#FF6699"   # December
+    ]
+    for row in range(num_of_rows):
+        bars = [x + offset for x in range(len(pivot_df.iloc[row]))] 
+        offset += barWidth
+
+        # Make the plot
+        plt.bar(bars, pivot_df.iloc[row], color=hex_colors[row], width=barWidth, 
+            edgecolor='black', label=labels[row]) 
     
     # Adding Xticks 
     plt.xlabel('Years', fontweight ='bold', fontsize = 15) 
     plt.ylabel('Average Page Views', fontweight ='bold', fontsize = 15) 
-    plt.xticks([r + barWidth for r in range(len(unique_years))], unique_years)
+    plt.xticks([r + barWidth*6 for r in range(len(unique_years))], unique_years)
     
     plt.legend()
-    # plt.show() 
 
     fig = plt.gcf()
 
