@@ -49,6 +49,7 @@ def draw_bar_plot():
 
     # Pivot the dataframe
     pivot_df = monthly_average.pivot(index='Month', columns='Year', values='value')
+    pivot_df.fillna(0, inplace=True)
     print("pivot_df")
     print(pivot_df)
 
