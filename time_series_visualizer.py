@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
+import numpy as np
 
 # Import data (Make sure to parse dates. Consider setting index column to 'date'.)
 df = pd.read_csv('fcc-forum-pageviews.csv', index_col='date', parse_dates=True)
@@ -39,27 +40,52 @@ def draw_bar_plot():
 
     monthly_average.index = pd.to_datetime(monthly_average.index.map(lambda x: f'{x[0]}-{x[1]}'))
 
-    print("monthly_average:")
-    print(monthly_average)
+    # Extract unique years from the index
+    unique_years = set(monthly_average.index.year)
 
-    # Create figure and axis objects
-    fig, ax = plt.subplots(figsize=(10, 6))
+    # Add columns for Year and Month
+    monthly_average['Year'] = monthly_average.index.year
+    monthly_average['Month'] = monthly_average.index.month
 
-    # Plot the bar chart
-    ax.bar(monthly_average.index, monthly_average['value'], color='skyblue')
-
-    # Set labels and title
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Value')
-
-    # Rotate x-axis labels for better readability (optional)
-    plt.xticks(rotation=45)
-
-    # Tight layout to prevent clipping of labels
-    plt.tight_layout()
+    # Pivot the dataframe
+    pivot_df = monthly_average.pivot(index='Month', columns='Year', values='value')
+    print("pivot_df")
+    print(pivot_df)
 
 
-    # # Save image and return fig (don't change this part)
+    # set width of bar 
+    barWidth = 0.25
+    plt.subplots(figsize =(12, 8)) 
+    
+    # set height of bar 
+    IT = [12, 30, 1, 8, 22] 
+    ECE = [28, 6, 16, 5, 10] 
+    CSE = [29, 3, 24, 25, 17] 
+    
+    # Set position of bar on X axis 
+    br1 = np.arange(len(IT)) 
+    br2 = [x + barWidth for x in br1] 
+    br3 = [x + barWidth for x in br2] 
+    
+    # Make the plot
+    plt.bar(br1, IT, color ='r', width = barWidth, 
+            edgecolor ='grey', label ='IT') 
+    plt.bar(br2, ECE, color ='g', width = barWidth, 
+            edgecolor ='grey', label ='ECE') 
+    plt.bar(br3, CSE, color ='b', width = barWidth, 
+            edgecolor ='grey', label ='CSE') 
+    
+    # Adding Xticks 
+    plt.xlabel('Years', fontweight ='bold', fontsize = 15) 
+    plt.ylabel('Average Page Views', fontweight ='bold', fontsize = 15) 
+    plt.xticks([r + barWidth for r in range(len(unique_years))], unique_years)
+    
+    plt.legend()
+    # plt.show() 
+
+    fig = plt.gcf()
+
+    # Save image and return fig (don't change this part)
     fig.savefig('bar_plot.png')
     return fig
 
