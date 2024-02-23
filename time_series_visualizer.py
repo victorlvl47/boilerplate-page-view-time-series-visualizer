@@ -119,7 +119,7 @@ def draw_box_plot():
     month_df = df_box['month'].copy()
 
     # Create a figure
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(22, 8))
 
     # Draw box plots (using Seaborn)
     colors = ['red', 'green', 'blue', 'orange', 'purple', 'yellow', 'cyan', 'magenta', 'lime', 'pink', 'teal', 'brown']
