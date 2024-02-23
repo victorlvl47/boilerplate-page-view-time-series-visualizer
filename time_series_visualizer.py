@@ -123,7 +123,8 @@ def draw_box_plot():
 
     # Draw box plots (using Seaborn)
     sns.boxplot(x=year_df, y=df_box['value'], ax=ax1)
-    sns.boxplot(x=month_df, y=df_box['value'], ax=ax2)
+    desired_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    sns.boxplot(x=month_df, y=df_box['value'], order=desired_order, ax=ax2)
 
     # Set titles for each subplot
     ax1.set_title('Year-wise Box Plot (Trend)')
