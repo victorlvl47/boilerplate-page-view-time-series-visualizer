@@ -122,8 +122,8 @@ def draw_box_plot():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
 
     # Draw box plots (using Seaborn)
-    sns.boxplot(x=year_df, ax=ax1)
-    sns.boxplot(x=month_df, ax=ax2)
+    sns.boxplot(x=year_df, y=df_box['value'], ax=ax1)
+    sns.boxplot(x=month_df, y=df_box['value'], ax=ax2)
 
     # Set titles for each subplot
     ax1.set_title('Year-wise Box Plot (Trend)')
