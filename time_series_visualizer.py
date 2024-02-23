@@ -122,9 +122,10 @@ def draw_box_plot():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
 
     # Draw box plots (using Seaborn)
-    sns.boxplot(x=year_df, y=df_box['value'], ax=ax1)
+    colors = ['red', 'green', 'blue', 'orange', 'purple', 'yellow', 'cyan', 'magenta', 'lime', 'pink', 'teal', 'brown']
+    sns.boxplot(x=year_df, y=df_box['value'], palette=colors[1:5], ax=ax1)
     desired_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    sns.boxplot(x=month_df, y=df_box['value'], order=desired_order, ax=ax2)
+    sns.boxplot(x=month_df, y=df_box['value'], order=desired_order, palette=colors, ax=ax2)
 
     # Set titles for each subplot
     ax1.set_title('Year-wise Box Plot (Trend)')
